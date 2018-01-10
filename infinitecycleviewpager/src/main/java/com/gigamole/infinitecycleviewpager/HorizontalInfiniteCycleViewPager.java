@@ -114,10 +114,14 @@ public class HorizontalInfiniteCycleViewPager extends ViewPager implements ViewP
 
     @Override
     public void setPageTransformer(final boolean reverseDrawingOrder, final PageTransformer transformer) {
-        super.setPageTransformer(
-                false, mInfiniteCycleManager == null ?
-                        transformer : mInfiniteCycleManager.getInfinityCyclePageTransformer()
-        );
+        if (transformer != null) {
+            super.setPageTransformer(false, transformer
+            );
+        } else if (mInfiniteCycleManager != null) {
+            super.setPageTransformer(false,
+                    mInfiniteCycleManager.getInfinityCyclePageTransformer()
+            );
+        }
     }
 
     @Override
@@ -147,7 +151,7 @@ public class HorizontalInfiniteCycleViewPager extends ViewPager implements ViewP
 
     @Override
     public void setPageMargin(final int marginPixels) {
-        super.setPageMargin(InfiniteCycleManager.DEFAULT_PAGE_MARGIN);
+        super.setPageMargin(marginPixels);
     }
 
     @Override
@@ -253,7 +257,8 @@ public class HorizontalInfiniteCycleViewPager extends ViewPager implements ViewP
     }
 
     public void startAutoScroll(final boolean isAutoScrollPositive) {
-        if (mInfiniteCycleManager != null) mInfiniteCycleManager.startAutoScroll(isAutoScrollPositive);
+        if (mInfiniteCycleManager != null)
+            mInfiniteCycleManager.startAutoScroll(isAutoScrollPositive);
     }
 
     public void stopAutoScroll() {
